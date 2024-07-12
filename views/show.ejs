@@ -1,0 +1,192 @@
+<%- layout("layout/boilerplate") %>
+
+    <link rel="stylesheet" href="/styles/stars.css">
+    <link rel="stylesheet" href="/styles/styles.css">
+
+
+
+
+    <div class="row">
+        <div class="col-lg-6 col-md-9 ">
+            <div class="card mb-4">
+
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <% for (let i=0; i < restaurant.image.length; i++) { %>
+                            <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                                <img class="d-block w-100 card-img-top carousel-image"
+                                    src="<%= restaurant.image[i].url %>" id="card-image-sizing"
+                                    alt="Image <%= i + 1 %>">
+                            </div>
+                            <% } %>
+                    </div>
+                    <% if(restaurant.image.length> 1){ %>
+                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+                            data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+                            data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only"></span>
+                        </a>
+                        <% } %>
+                </div>
+
+
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%= restaurant.name %>
+                    </h5>
+
+                    <p class="card-text">
+                        <%= restaurant.description %>
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-muted">
+                        <%= restaurant.location %>
+                    </li>
+                    <li class="list-group-item text-muted">
+                        <p class="d-inline">Price Range :</p>
+                        <%= restaurant.price %>
+                    </li>
+                    <li class="list-group-item text-muted">
+                        <p class="d-inline">Cuisine :</p>
+                        <%= restaurant.cuisine %>
+                    </li>
+                    <li class="list-group-item text-muted">
+                        <p class="d-inline">Added by :</p>
+                        <%= restaurant.author.username %>
+                    </li>
+
+                </ul>
+                <% if(userLogged && restaurant.author.equals(userLogged._id)){ %>
+                    <div class="card-body">
+                        <a href="/restaurants/<%= restaurant.id %>/edit" class="card-link btn btn-primary">Edit
+                            Restaurant</a>
+
+
+                        <div class="d-inline">
+
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal">
+                                Delete Restaurant
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel">Delete Restaurant</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to delete this restaurant?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <div class="d-inline">
+                                                <form action="/restaurants/<%= restaurant.id%>?_method=delete"
+                                                    method="post" class="d-inline">
+                                                    <button class="btn btn-danger">Delete Restaurant</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                        <div class="card-footer text-muted">
+                            Added on <%= restaurant.createdOn %>
+                        </div>
+            </div>
+
+        </div>
+        <div class="col-lg-6 col-md-9">
+
+            <div id='map' style='width: 100%;height: 400px;' class="mb-3"></div>
+
+
+            <% if(userLogged){ %>
+                <form action="/restaurants/<%= restaurant.id %>/reviews" method="post" novalidate
+                    class="needs-validation md-3">
+                    <h4 class="mb-0"><label for="rating" class="form-label mb-0">Rate them</label></h4>
+
+                    <!-- <input type="range" class="form-range" min="1" max="5" step="1" id="rating" name="rating"> -->
+
+                    <fieldset class="starability-basic">
+                        <legend></legend>
+                        <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="1" checked
+                            aria-label="No rating." />
+                        <input checked type="radio" id="first-rate1" name="rating" value="1" />
+                        <label for="first-rate1" title="Terrible">1 star</label>
+                        <input type="radio" id="first-rate2" name="rating" value="2" />
+                        <label for="first-rate2" title="Not good">2 stars</label>
+                        <input type="radio" id="first-rate3" name="rating" value="3" />
+                        <label for="first-rate3" title="Average">3 stars</label>
+                        <input type="radio" id="first-rate4" name="rating" value="4" />
+                        <label for="first-rate4" title="Very good">4 stars</label>
+                        <input type="radio" id="first-rate5" name="rating" value="5" />
+                        <label for="first-rate5" title="Amazing">5 stars</label>
+                    </fieldset>
+
+                    <div class="form-group mb-3">
+                        <label for="body" class="mb-2 ">Leave a review</label>
+                        <textarea class="form-control" id="body" rows="3" name="body" placeholder="Leave a review"
+                            required></textarea>
+
+                    </div>
+                    <button class="btn btn-sm btn-info">Post</button>
+                </form>
+                <% } %>
+
+                    <% for(let review of restaurant.reviews){ %>
+                        <div class="card mb-2">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>
+                                        <%= review.author.username %>
+                                    </strong>
+
+                                </div>
+                                <form action="/restaurants/<%= restaurant.id %>/reviews/<%= review.id %>?_method=delete"
+                                    method="post" class="my-auto">
+                                    <% if(userLogged && review.author.equals(userLogged._id)){ %>
+                                        <button type="submit" class="btn-close btn-sm" aria-label="Close"></button>
+                                        <% } %>
+                                </form>
+                            </div>
+                            <div class="card-body">
+                                <!-- <h5 class="card-title">Rating : <%= review.rating %>
+                                </h5> -->
+                                <p class="starability-result" data-rating=<%=review.rating %>>
+                                </p>
+                                <p class="card-text">
+                                    <%= review.body %>
+                                </p>
+                            </div>
+                        </div>
+                        <% } %>
+        </div>
+    </div>
+
+
+    <script>
+        const mapToken = "<%= process.env.MAPBOX_TOKEN %>";
+        const coordinatesString = '<%= JSON.stringify(restaurant.geometry.coordinates) %>';
+        const coordinates = JSON.parse(coordinatesString)
+        const restaurantName = `<%=restaurant.name %>`
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/js/mapBox.js"></script>

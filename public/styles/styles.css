@@ -1,0 +1,13 @@
+#card-image-sizing {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    object-position: center;
+}
+
+#card-image-sizing-all {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    object-position: center;
+}

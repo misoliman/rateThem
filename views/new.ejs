@@ -1,0 +1,49 @@
+<%- layout("layout/boilerplate") %>
+
+
+    <div class="row">
+        <h1 class="text-center mb-5">New Restaurant</h1>
+        <div class="col-lg-6 col-md-9 mx-auto">
+
+
+            <form action="/restaurants" method="post" novalidate class="needs-validation" enctype="multipart/form-data"
+                multiple>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Restaurant Name</label>
+                    <input type="text" name="name" class="form-control" id="name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" class="form-control" name="location" id="location" required>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="cuisine" class="form-label">Cuisine</label>
+                        <input type="text" class="form-control" id="cuisine" name="cuisine" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="price" class="form-label">Price Range</label>
+                        <input type="text" class="form-control" id="price" placeholder="Enter $ Signs" name="price"
+                            required pattern="\$|(\$\$)|(\$\$\$)|(\$\$\$\$)|(\$\$\$\$\$)">
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="formFileMultiple" class="form-label">Image Upload</label>
+                    <input class="form-control" type="file" id="formFileMultiple" name="image" multiple required>
+                </div>
+
+                <div class="mb-5">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" rows="3" name="description" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Restaurant</button>
+            </form>
+            <!-- <div>
+                <a href="/restaurants">Back</a>
+            </div> -->
+        </div>
+    </div>
