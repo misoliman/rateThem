@@ -24,7 +24,7 @@ const userRoutes = require("./routes/users")
 
 
 
-const port = 3000
+const port = process.env.PORT || 3000
 const altalsDB = process.env.DB_URL
 const localDB = process.env.DB_LOCAL
 
