@@ -16,7 +16,6 @@ mongoose.connect(altalsDB)
 const clearDB = async () => {
     try {
         await Restaurant.deleteMany({});
-        await User.deleteMany({})
         await Review.deleteMany({})
 
         console.log('Database cleared successfully');

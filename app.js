@@ -26,7 +26,7 @@ const userRoutes = require("./routes/users")
 
 const port = process.env.PORT || 3000
 const altalsDB = process.env.DB_URL
-const localDB = process.env.DB_LOCAL
+const localDB = "mongodb://localhost:27017/rate-them"
 
 
 mongoose.connect(altalsDB)

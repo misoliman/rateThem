@@ -512,7 +512,7 @@ const fetchData = async () => {
         for (let i = 0; i < pictures.length; i++) {
             const restaurantIndex = i % restaurants.length;
             restaurants[restaurantIndex].image.push({ url: pictures[i] });
-            restaurants[restaurantIndex].author = "66911201c3f6b9539fd5a8d6";
+            restaurants[restaurantIndex].author = "66954b86410c6711f2dcb45e";
         }
         return restaurants
     } catch (error) {
