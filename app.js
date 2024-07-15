@@ -1,6 +1,6 @@
-// if (process.env.ENV !== "Production") {
-//     require("dotenv").config()
-// }
+if (process.env.NODE_ENV !== "Production") {
+    require("dotenv").config()
+}
 
 const express = require("express")
 const session = require("express-session")
@@ -25,7 +25,7 @@ const userRoutes = require("./routes/users")
 
 
 const port = process.env.PORT || 3000
-const altalsDB = process.env.MONGODB_URI
+const altalsDB = "mongodb+srv://vercel-admin-user:6Ec2ZkV6xH7dhEmV@cluster1.8zsmg2k.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 const localDB = "mongodb://localhost:27017/rate-them"
 
 
